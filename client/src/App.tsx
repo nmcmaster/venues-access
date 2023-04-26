@@ -3,6 +3,10 @@ import { Venue, venue1, venue2 } from "./venue";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { PlusIcon, MinusIcon } from "@heroicons/react/24/solid";
+import { PrismaClient } from '@prisma/client'
+
+const prisma = new PrismaClient()
+// use `prisma` in your application to read and write data in your DB
 
 export default function Access() {
 	const [venue, setVenue] = useState<Venue>(venue1);

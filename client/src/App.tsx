@@ -1,16 +1,16 @@
 import { PaperClipIcon } from "@heroicons/react/20/solid";
 import { Venue, venue1, venue2 } from "./venue";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { PlusIcon, MinusIcon } from "@heroicons/react/24/solid";
-import { PrismaClient } from '@prisma/client'
-
-const prisma = new PrismaClient()
-// use `prisma` in your application to read and write data in your DB
 
 export default function Access() {
 	const [venue, setVenue] = useState<Venue>(venue1);
 	const duration = 1.5;
+
+	useEffect(() => {
+		console.log();
+	}, [])  
 
 	return (
 		<div className="bg-slate-900 min-h-screen pt-12 drop-shadow-2xl">

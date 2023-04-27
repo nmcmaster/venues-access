@@ -40,7 +40,7 @@ export default function Access() {
 	return (
 		<div className="bg-slate-900 min-h-screen pt-12 drop-shadow-2xl">
 			<div className="overflow-hidden drop-shadow-2xl shadow sm:rounded-lg">
-				<div className="flex justify-between px-4 py-6 sm:px-6">
+				<div className="flex justify-between px-4 py-5 sm:px-6">
 					<motion.div
 						key={venue.name}
 						initial={{ opacity: 0 }}
@@ -56,7 +56,7 @@ export default function Access() {
 							</span>
 						</h3>
 						<p className="mt-1 max-w-2xl text-sm leading-6 text-gray-200">
-							{venue.neighborhood}
+							{venue.neighborhood ? <span>{venue.neighborhood}</span> : <span className="text-gray-600">no neighborhood record</span>}
 						</p>
 					</motion.div>
 					<FontSizeIcon duration={duration} />

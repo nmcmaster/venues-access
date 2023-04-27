@@ -1,21 +1,22 @@
-import { PrismaClient } from "@prisma/client";
+import cors from 'cors';
+import express from 'express';
+import * as trpcExpress from '@trpc/server/adapters/express';
 
-const prisma = new PrismaClient();
+import { appRouter } from './router';
+import { createContext } from './context';
 
-async function venueServe() {
-	const venues = await prisma.venue.findMany();
-	console.log(venues.filter((_venue, i) => i < 10));
-	return venues;
-}
+const app = express();
 
-export function give() {
-	return venueServe()
-		.then(async () => {
-			await prisma.$disconnect();
-		})
-		.catch(async (e) => {
-			console.error(e);
-			await prisma.$disconnect();
-			process.exit(1);
-		});
-}
+app.use(cors());
+
+app.use(
+  '/trpc',
+  trpcExpress.createExpressMiddleware({
+    router: appRouter,
+    createContext,
+  })
+);
+// console.log('server running');
+app.listen(4000);
+
+export type AppRouter = typeof appRouter;

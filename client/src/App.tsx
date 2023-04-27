@@ -1,16 +1,37 @@
 import { PaperClipIcon } from "@heroicons/react/20/solid";
-import { Venue, venue1, venue2 } from "./venue";
+import { Venue } from "../../server/src/venue/types";
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { PlusIcon, MinusIcon } from "@heroicons/react/24/solid";
+import { trpc } from "./trpc";
+
+const venue1: Venue = {
+	mask: "",
+	accessibility: "stairs",
+	name: "First Unitarian Church",
+	address: "119 Pierrepont St",
+	neighborhood: "brooklyn heights",
+	borough: "brooklyn",
+	accessNotes: "wheelchair lift",
+	link: "",
+	confirmed: "email",
+	maskLink: "",
+};
 
 export default function Access() {
+	const { data, isLoading } = trpc.venue.getVenues.useQuery();
 	const [venue, setVenue] = useState<Venue>(venue1);
 	const duration = 1.5;
 
 	useEffect(() => {
-		console.log();
-	}, [])  
+		if (data) {
+			const filtered = data.filter(
+				(venue) => venue.address !== "[dm hosts]"
+			);
+			const venueData = filtered[100];
+			setVenue(venueData);
+		}
+	}, [data]);
 
 	return (
 		<div className="bg-slate-900 min-h-screen pt-12 drop-shadow-2xl">
@@ -37,8 +58,14 @@ export default function Access() {
 							</p>
 						</div>
 						<div className="flex">
-							<MinusIcon height={48} className="text-gray-200 cursor-pointer mr-0.5" />
-							<PlusIcon height={48} className="text-gray-200 cursor-pointer" />
+							<MinusIcon
+								height={48}
+								className="text-gray-200 cursor-pointer mr-0.5"
+							/>
+							<PlusIcon
+								height={48}
+								className="text-gray-200 cursor-pointer"
+							/>
 						</div>
 					</motion.div>
 				</AnimatePresence>
@@ -46,7 +73,7 @@ export default function Access() {
 					<dl className="divide-y divide-gray-600">
 						<AnimatePresence>
 							<motion.div
-								key={venue.address + venue.borough}
+								key={`${venue.address} + ${venue.borough}`}
 								initial={{ opacity: 0 }}
 								animate={{ opacity: 1 }}
 								transition={{ duration }}

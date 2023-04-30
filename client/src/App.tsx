@@ -196,7 +196,7 @@ export default function App() {
 												}}
 												className="text-white cursor-pointer"
 											>
-												{venue.link}
+												{<a href={venue.link}>{venue.link}</a> }
 											</motion.span>
 										) : (
 											<span className="text-gray-600">

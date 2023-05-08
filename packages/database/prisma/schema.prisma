@@ -1,0 +1,46 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  login     String   @unique
+  password  String
+}
+
+model Venue {
+  id               Int      @id @default(autoincrement())
+  createdAt        DateTime @default(now())
+  name             String?  @unique
+  accessibility    String?
+  notes            String?
+  address          String?
+  phoneNumber      String?
+  email            String?
+  neighborhood     String?
+  borough          String?
+  age              String?
+  link             String?
+  mask             String?
+  maskPolicy       String?
+  confirmed        String?
+  ofNoteWaitTime   String?
+  entry            String?
+  restroom         String?
+  stage            String?
+  seating          String?
+  transit          String?
+  visualAids       String?
+  listeningDevices String?
+  asl              String?
+  the              String?
+}
